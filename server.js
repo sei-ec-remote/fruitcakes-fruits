@@ -131,8 +131,20 @@ app.put('/fruits/:id', (req, res) => {
         })
         .catch(err => console.log(err))
 })
-// DELET route
+// DELETE route
 // Delete -> delete a specific fruit
+app.delete('/fruits/:id', (req, res) => {
+    // get the id from the req
+    const id = req.params.id
+    // find and delete the fruit
+    Fruit.findByIdAndRemove(id)
+        // send a 204 if successful
+        .then(() => {
+            res.sendStatus(204)
+        })
+        // send an error if not
+        .catch(err => console.log(err))
+})
 
 // SHOW route
 // Read -> finds and displays a single resource

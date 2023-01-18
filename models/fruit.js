@@ -12,10 +12,23 @@ const { Schema, model } = mongoose
 
 // fruits schema
 const fruitSchema = new Schema({
-    name: String,
-    color: String,
-    readyToEat: Boolean
-})
+    name: {
+        type: String
+    },
+    color: {
+        type: String
+    },
+    readyToEat: {
+        type: Boolean
+    },
+    owner: {
+        // this is where we set up an objectId reference
+        // by declaring that as the type
+        type: Schema.Types.ObjectId,
+        // this line tells us which model to look at
+        ref: 'User'
+    }
+}, { timestamps: true })
 
 // make the fruit model
 // the model method takes two arguments

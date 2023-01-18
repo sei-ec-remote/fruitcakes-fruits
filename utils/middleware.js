@@ -3,6 +3,9 @@
 /////////////////////////////////////
 const express = require('express') // import the express framework
 const morgan = require('morgan') // import the morgan request logger
+const session = require('express-session') // import the express-session package
+const MongoStore = require('connect-mongo') // import the connect-mongo package(for sessions)
+require('dotenv').config()
 
 /////////////////////////////////////
 //// Middleware function         ////
@@ -15,6 +18,23 @@ const middleware = (app) => {
     app.use(express.urlencoded({ extended: true })) //this parses urlEncoded request bodies(useful for POST and PUT requests)
     app.use(express.static('public')) // this serves static files from the 'public' folder
     app.use(express.json()) // parses incoming request payloads with JSON
+    // here, we set up and utilize a session function, and we pass that function a config argument, to configure our session in the way we want. This argument will tell express-session how to create and store our session.
+    // The config object, needs several keys in order to work(see express-session docs)
+    // The keys are:
+    // secret - a super top secret code, that allows for the creation of a session
+    // this secret is kinda like authorization, that allows our app to create with connectMongo
+    // store -> tells connect-mongo where to save the session(our db)
+    // then two options: saveUninitialized(set to true) and resave(set to false)
+    app.use(
+        session({
+            secret: process.env.SECRET,
+            store: MongoStore.create({
+                mongoUrl: process.env.DATABASE_URL
+            }),
+            saveUninitialized: true,
+            resave: false
+        })
+    )
 }
 
 ///////////////////////////////////////////

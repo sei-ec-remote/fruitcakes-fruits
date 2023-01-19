@@ -13,7 +13,13 @@ const middleware = require('./utils/middleware')
 /////////////////////////////////////
 //// Create our Express App Object //
 /////////////////////////////////////
-const app = express()
+// this was fine for building an API that sends and receives json
+// const app = express()
+// but now, our app is going to be Full-Stack. That means handling front-end and back-end from the same server(in this case).
+// so, we're utilizing an npm package `liquid-express-views` to add the 'view' layer to our MVC framework.
+// in short, we need to update our app object and tell it to use that package, as stated by the documentation. 
+const app = require('liquid-express-views')(express())
+// what liquid-express-views really does for us, is make it easy to path to our .liquid files(which will serve our html). This package says to look inside the 'views' folder for files with the .liquid name.
 
 /////////////////////////////////////
 //// Middleware                  ////
@@ -27,8 +33,9 @@ middleware(app)
 /////////////////////////////////////
 //// Routes                      ////
 /////////////////////////////////////
+// HOME route
 app.get('/', (req, res) => {
-    res.send('Server is live, ready for requests')
+    res.render('home.liquid')
 })
 
 // This is now where we register our routes, this is how server.js knows to send the correc response. 

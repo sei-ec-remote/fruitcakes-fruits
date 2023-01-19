@@ -7,6 +7,7 @@ require('dotenv').config() // Load my ENV file's variables
 const path = require('path') // import path module
 const FruitRouter = require('./controllers/fruitControllers')
 const UserRouter = require('./controllers/userControllers')
+const CommentRouter = require('./controllers/commentControllers')
 const middleware = require('./utils/middleware')
 
 /////////////////////////////////////
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 // app.use, when we register a route, needs two arguments
 // the first arg is the base URL, second arg is the file to use.
 app.use('/fruits', FruitRouter)
+app.use('/comments', CommentRouter)
 app.use('/users', UserRouter)
 
 /////////////////////////////////////

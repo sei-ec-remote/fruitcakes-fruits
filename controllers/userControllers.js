@@ -13,12 +13,19 @@ const router = express.Router()
 //////////////////////////////
 //// Routes               ////
 //////////////////////////////
+// GET -> /users/signup
+// Renders a liquid page with the sign up form
+router.get('/signup', (req, res) => {
+    res.render('users/signup')
+})
+
+
 // POST -> /users/signup
 // This route creates new users in our db
 router.post('/signup', async (req, res) => {
     // this route will take a req.body and use that data to create a user
     const newUser = req.body
-    // console.log('this is req.body', req.body)
+    console.log('this is req.body', req.body)
     // we'll need to encrypt their password
     // this is where bcrypt comes into play
     // for the sake of bcrypt, we're going to use async and await

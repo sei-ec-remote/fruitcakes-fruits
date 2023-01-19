@@ -1,0 +1,24 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    <div class="container-sm">
+        {%- comment -%}
+        in a form, we have an action and a method.
+        the action points to our url endpoint
+        the method is the HTTP verb for that endpoint
+        for example: this form will send a POST to /users/signup
+        {%- endcomment -%}
+        <form action="/users/signup" method="POST">
+            <fieldset>
+                <legend>Sign Up for an Account</legend>
+                <label class="form-label">Username:</label>
+                {%- comment -%}
+                form inputs need a type(think data type) and a name(think object key) so if we use type: String and require req.body.username, our form input will look like the one below.
+                {%- endcomment -%}
+                <input type="text" class="form-control" name="username" placeholder="username" required>
+                <label class="form-label">Password: </label>
+                <input type="password" class="form-control" name="password" placeholder="password" required>
+            </fieldset>
+            <input type="submit" class="btn btn-success mt-3" value="Create Account">
+        </form>
+    </div>
+{% endblock %}

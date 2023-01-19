@@ -47,6 +47,12 @@ router.post('/signup', async (req, res) => {
         })
 })
 
+// GET -> /users/login
+// Renders a liquid page with the login form
+router.get('/login', (req, res) => {
+    res.render('users/login')
+})
+
 // POST -> /users/login
 // This route creates new session in our db(and in the browser)
 router.post('/login', async (req, res) => {
@@ -94,6 +100,14 @@ router.post('/login', async (req, res) => {
         })
 })
 
+
+
+// GET -> /users/logout
+// This route renders a page that allows the user to log out
+router.get('/logout', (req, res) => {
+    res.render('users/logout')
+})
+
 // DELETE -> /users/logout
 // This route destroys a session in our db(and in the browser)
 router.delete('/logout', (req, res) => {
@@ -101,7 +115,7 @@ router.delete('/logout', (req, res) => {
     req.session.destroy(() => {
         console.log('this is req.session upon logout \n', req.session)
         // eventually we will redirect users here, but thats after adding the view layer
-        res.sendStatus(204)
+        res.redirect('/')
     })
 })
 

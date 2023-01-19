@@ -1,0 +1,19 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+    <div class="container-md">
+        <h2>Are you sure you would like to log out?</h2>
+        <div class="btn-group">
+            <a href="/" class="btn btn-warning me-3">No, back to home page</a>
+            {%- comment -%}
+            this is where we need to use method-override
+            forms can only POST or GET by default
+            m-o, allows us to override this default behavior
+            we override the behavior by appending the action with:
+            ?_method=HTTPVERB
+            {%- endcomment -%}
+            <form action="/users/logout?_method=DELETE" method="POST">
+                <input type="submit" class="btn btn-danger" value="Yes, log me out">
+            </form>
+        </div>
+    </div>
+{% endblock %}

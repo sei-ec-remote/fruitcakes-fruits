@@ -36,6 +36,12 @@ router.get('/', (req, res) => {
         })
 })
 
+// GET for the new page
+// shows a form where a user can create a new fruit
+router.get('/new', (req, res) => {
+    res.render('fruits/new', { ...req.session })
+})
+
 // CREATE route
 // Create -> receives a request body, and creates a new document in the database
 router.post('/', (req, res) => {
@@ -46,8 +52,13 @@ router.post('/', (req, res) => {
     // we want to add an owner field to our fruit
     // luckily for us, we saved the user's id on the session object, so it's really easy for us to access that data
     req.body.owner = req.session.userId
+
+    // we need to do a little js magic, to get our checkbox turned into a boolean
+    // here we use a ternary operator to change the on value to send as true
+    // otherwise, make that field false
+    req.body.readyToEat = req.body.readyToEat === 'on' ? true : false
     const newFruit = req.body
-    // console.log('this is req.body aka newFruit, after owner', newFruit)
+    console.log('this is req.body aka newFruit, after owner\n', newFruit)
     Fruit.create(newFruit)
         // send a 201 status, along with the json response of the new fruit
         .then(fruit => {
@@ -72,6 +83,26 @@ router.get('/mine', (req, res) => {
             // if found, display the fruits
             // res.status(200).json({ fruits: fruits })
             res.render('fruits/index', { fruits, ...req.session })
+        })
+        .catch(err => {
+            // otherwise throw an error
+            console.log(err)
+            res.status(400).json(err)
+        })
+})
+
+// GET route for getting json for specific user fruits
+// Index -> This is a user specific index route
+// this will only show the logged in user's fruits
+router.get('/json', (req, res) => {
+    // find fruits by ownership, using the req.session info
+    Fruit.find({ owner: req.session.userId })
+        .populate('owner', 'username')
+        .populate('comments.author', '-password')
+        .then(fruits => {
+            // if found, display the fruits
+            res.status(200).json({ fruits: fruits })
+            // res.render('fruits/index', { fruits, ...req.session })
         })
         .catch(err => {
             // otherwise throw an error

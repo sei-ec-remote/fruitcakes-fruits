@@ -19,7 +19,7 @@
                     first button will take us to the edit page
                     second will actually be a form, that calls our delete route
                     {%- endcomment -%}
-                    <a href="" class="btn btn-primary">Edit {{fruit.name}}</a>
+                    <a href="/fruits/edit/{{fruit.id}}" class="btn btn-primary">Edit {{fruit.name}}</a>
                     <form action="/fruits/{{fruit.id}}?_method=DELETE" method="POST">
                         <input type="submit" class="btn btn-danger" value="Delete {{fruit.name}}">
                     </form>

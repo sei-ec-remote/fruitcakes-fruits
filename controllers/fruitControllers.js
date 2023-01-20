@@ -32,7 +32,8 @@ router.get('/', (req, res) => {
         // catch errors if they occur
         .catch(err => {
             console.log(err)
-            res.status(404).json(err)
+            // res.status(404).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -62,12 +63,18 @@ router.post('/', (req, res) => {
     Fruit.create(newFruit)
         // send a 201 status, along with the json response of the new fruit
         .then(fruit => {
-            res.status(201).json({ fruit: fruit.toObject() })
+            // in the API server version of our code we sent json and a success msg
+            // res.status(201).json({ fruit: fruit.toObject() })
+            // we could redirect to the 'mine' page
+            // res.status(201).redirect('/fruits/mine')
+            // we could also redirect to the new fruit's show page
+            res.redirect(`/fruits/${fruit.id}`)
         })
         // send an error if one occurs
         .catch(err => {
             console.log(err)
-            res.status(404).json(err)
+            // res.status(404).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -87,7 +94,8 @@ router.get('/mine', (req, res) => {
         .catch(err => {
             // otherwise throw an error
             console.log(err)
-            res.status(400).json(err)
+            // res.status(400).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -125,12 +133,14 @@ router.put('/:id', (req, res) => {
                 return fruit.updateOne(req.body)
             } else {
                 // otherwise send a 401 unauthorized status
-                res.sendStatus(401)
+                // res.sendStatus(401)
+                res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20edit%20this%20fruit`)
             }
         })
         .catch(err => {
             console.log(err)
-            res.status(400).json(err)
+            // res.status(400).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -143,17 +153,22 @@ router.delete('/:id', (req, res) => {
             // if the owner of the fruit is the person who is logged in
             if (fruit.owner == req.session.userId) {
                 // send success message
-                res.sendStatus(204)
+                // res.sendStatus(204)
                 // delete the fruit
                 return fruit.deleteOne()
             } else {
                 // otherwise send a 401 unauthorized status
-                res.sendStatus(401)
+                // res.sendStatus(401)
+                res.redirect(`/error?error=You%20Are%20not%20allowed%20to%20delete%20this%20fruit`)
             }
+        })
+        .then(() => {
+            res.redirect('/fruits/mine')
         })
         .catch(err => {
             console.log(err)
-            res.status(400).json(err)
+            // res.status(400).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 
@@ -173,7 +188,8 @@ router.get('/:id', (req, res) => {
         // catch any errors
         .catch(err => {
             console.log(err)
-            res.status(404).json(err)
+            // res.status(404).json(err)
+            res.redirect(`/error?error=${err}`)
         })
 })
 

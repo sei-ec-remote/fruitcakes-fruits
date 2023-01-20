@@ -12,6 +12,19 @@
             </h4>
             <h4>The color of the fruit is: {{fruit.color}}</h4>
             <div class="colorBox" style="background-color: {{fruit.color}}"></div>
+            {% if fruit.owner == userId %}
+                <hr>
+                <div class="btn-group">
+                    {%- comment -%}
+                    first button will take us to the edit page
+                    second will actually be a form, that calls our delete route
+                    {%- endcomment -%}
+                    <a href="" class="btn btn-primary">Edit {{fruit.name}}</a>
+                    <form action="/fruits/{{fruit.id}}?_method=DELETE" method="POST">
+                        <input type="submit" class="btn btn-danger" value="Delete {{fruit.name}}">
+                    </form>
+                </div>
+            {% endif %}
         </article>
     </div>
 {% endblock %}

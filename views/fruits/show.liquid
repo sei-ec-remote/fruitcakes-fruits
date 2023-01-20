@@ -1,31 +1,43 @@
 {% layout 'layout.liquid' %}
 {% block content %}
     <div class="container-md">
-        <article>
-            <h2>{{fruit.name}}</h2>
-            <h4>
-                {% if fruit.readyToEat %}
-                    Ripe and Ready
-                {% else %}
-                    Not Ripe! Do Not Eat!
+        <div class="row justify-content-between">
+            <article class="col-5">
+                <h2>{{fruit.name}}</h2>
+                <h4>
+                    {% if fruit.readyToEat %}
+                        Ripe and Ready
+                    {% else %}
+                        Not Ripe! Do Not Eat!
+                    {% endif %}
+                </h4>
+                <h4>The color of the fruit is: {{fruit.color}}</h4>
+                <div class="colorBox" style="background-color: {{fruit.color}}"></div>
+                {% if fruit.owner == userId %}
+                    <hr>
+                    <div class="btn-group">
+                        {%- comment -%}
+                        first button will take us to the edit page
+                        second will actually be a form, that calls our delete route
+                        {%- endcomment -%}
+                        <a href="/fruits/edit/{{fruit.id}}" class="btn btn-primary">Edit {{fruit.name}}</a>
+                        <form action="/fruits/{{fruit.id}}?_method=DELETE" method="POST">
+                            <input type="submit" class="btn btn-danger" value="Delete {{fruit.name}}">
+                        </form>
+                    </div>
                 {% endif %}
-            </h4>
-            <h4>The color of the fruit is: {{fruit.color}}</h4>
-            <div class="colorBox" style="background-color: {{fruit.color}}"></div>
-            {% if fruit.owner == userId %}
-                <hr>
-                <div class="btn-group">
-                    {%- comment -%}
-                    first button will take us to the edit page
-                    second will actually be a form, that calls our delete route
-                    {%- endcomment -%}
-                    <a href="/fruits/edit/{{fruit.id}}" class="btn btn-primary">Edit {{fruit.name}}</a>
-                    <form action="/fruits/{{fruit.id}}?_method=DELETE" method="POST">
-                        <input type="submit" class="btn btn-danger" value="Delete {{fruit.name}}">
-                    </form>
+            </article>
+            {% if fruitNutrients %}
+                <div class="fruitInfo col-3 mt-2 bg-light">
+                    <p class="mt-2">Nutritional Info:</p>
+                    <p>carbohydrates: {{ fruitNutrients.carbohydrates }}</p>
+                    <p>protein: {{ fruitNutrients.protein }}</p>
+                    <p>fat: {{ fruitNutrients.fat }}</p>
+                    <p>sugar: {{ fruitNutrients.sugar }}</p>
+                    <p>calories: {{ fruitNutrients.calories }}</p>
                 </div>
             {% endif %}
-        </article>
+        </div>
         <hr>
         <h4>comments</h4>
         <hr>

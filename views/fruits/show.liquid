@@ -26,5 +26,17 @@
                 </div>
             {% endif %}
         </article>
+        <hr>
+        <h4>comments</h4>
+        <hr>
+        {% if fruit.comments.length > 0 %}
+            <div class="container-sm justify-content-center">
+                {% for comm in fruit.comments %}
+                    {% render '../comment.liquid', comm: comm, userId: userId, fruit: fruit %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <small>no comments yet...</small>
+        {% endif %}
     </div>
 {% endblock %}

@@ -29,6 +29,23 @@
         <hr>
         <h4>comments</h4>
         <hr>
+        {% if loggedIn %}
+            <div class="col-md-6">
+                <form action="/comments/{{ fruit.id }}" method="POST">
+                    <fieldset>
+                        <legend>Add Comment</legend>
+                        <label class="form-label">comment: </label>
+                        <input type="text" name="note" class="form-control mb-1">
+                    </fieldset>
+                    <input type="submit" class="btn btn-success" value="add comment">
+                </form>
+            </div>
+        {% else %}
+            <div class="col-md-6">
+                <small>If you'd like to leave a comment, please log in...</small>
+            </div>
+        {% endif %}
+        <hr>
         {% if fruit.comments.length > 0 %}
             <div class="container-sm justify-content-center">
                 {% for comm in fruit.comments %}

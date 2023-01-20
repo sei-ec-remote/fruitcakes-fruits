@@ -14,14 +14,22 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand">FROOTR</a>
+                {% if loggedIn %}
+                    <a href="/fruits/mine" class="nav-link text-warning me-3">Hello {{username}}</a>
+                {% endif %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <a href="/fruits" class="nav-link text-light me-3">All Fruits</a>
-                    <a href="/users/signup" class="nav-link text-light me-3">Sign Up</a>
-                    <a href="/users/login" class="nav-link text-light me-3">Log In</a>
-                    <a href="/users/logout" class="nav-link text-light me-3">Log Out</a>
+                    {% if loggedIn %}
+                        <a href="/fruits" class="nav-link text-light me-3">All Fruits</a>
+                        <a href="/fruits/new" class="nav-link text-light me-3">New Fruit</a>
+                        <a href="/users/logout" class="nav-link text-light me-3">Log Out</a>
+                    {% else %}
+                        <a href="/fruits" class="nav-link text-light me-3">All Fruits</a>
+                        <a href="/users/signup" class="nav-link text-light me-3">Sign Up</a>
+                        <a href="/users/login" class="nav-link text-light me-3">Log In</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>

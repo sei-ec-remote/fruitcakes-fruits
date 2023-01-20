@@ -110,7 +110,6 @@ router.post('/login', async (req, res) => {
 })
 
 
-
 // GET -> /users/logout
 // This route renders a page that allows the user to log out
 router.get('/logout', (req, res) => {

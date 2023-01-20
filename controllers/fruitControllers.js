@@ -70,7 +70,8 @@ router.get('/mine', (req, res) => {
         .populate('comments.author', '-password')
         .then(fruits => {
             // if found, display the fruits
-            res.status(200).json({ fruits: fruits })
+            // res.status(200).json({ fruits: fruits })
+            res.render('fruits/index', { fruits, ...req.session })
         })
         .catch(err => {
             // otherwise throw an error

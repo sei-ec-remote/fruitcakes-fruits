@@ -207,7 +207,7 @@ router.get('/:id', async (req, res) => {
             // console.log(process.env.FRUITY_URL)
             const fruitInfo = await axios(`${process.env.FRUITY_URL}/${fruit.name}`)
             console.log('fruitInfo', fruitInfo.data.nutritions)
-            // const fruitNutrients = fruitInfo.data.error ? false : fruitInfo.data.nutritions
+            const fruitNutrients = fruitInfo.data.error ? false : fruitInfo.data.nutritions
             res.render('fruits/show.liquid', {fruit, fruitNutrients, ...req.session})
         })
         // catch any errors
